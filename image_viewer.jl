@@ -7,6 +7,7 @@ using Chain
 using GLMakie.Colors
 using Memoization
 
+GLMakie.set_window_config!(float=true)
 GLMakie.activate!()
 
 ##
