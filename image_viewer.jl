@@ -68,25 +68,26 @@ gl = GridLayout(f[2, 1], tellwidth=false)
 
 b = Button(gl[1, 2], label="Next")
 
-function offset_index(b, i, label)
+function offset_index(b, i)
+    prevlabel = b.label[]
     try
         b.label = "Loading..."
         index[] = mod1(index[] + i, length(metadata))
         reset_limits!(ax)
         reset_limits!(ax2)
     finally
-        b.label = label
+        b.label = prevlabel
     end
 end
 
 on(b.clicks) do c
-    @async offset_index(b, 1, "Next")
+    @async offset_index(b, 1)
 end
 
 b2 = Button(gl[1, 1], label="Previous")
 
 on(b2.clicks) do c
-    @async offset_index(b2, -1, "Previous")
+    @async offset_index(b2, -1)
 end
 
 f
