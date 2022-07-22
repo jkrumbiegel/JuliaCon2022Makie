@@ -9,11 +9,8 @@ using Memoization
 
 GLMakie.activate!()
 
+##
 metadata = open(JSON3.read, "images.json")
-
-index = Observable(1)
-
-entry = @lift metadata[$index]
 
 @memoize function load_image(url)
     @chain begin
@@ -24,12 +21,15 @@ entry = @lift metadata[$index]
         load
     end
 end
+##
+
+index = Observable(1)
+
+entry = @lift metadata[$index]
 
 img = lift(entry) do e
     load_image(e["url"])
 end
-
-##
 
 f = Figure(fontsize=30)
 
@@ -40,6 +40,7 @@ ax, im = image(f[1, 1], @lift($img'),
         title=@lift($entry["title"])
     )
 )
+hidedecorations!(ax)
 
 ax2 = Axis(f[1, 2])
 
@@ -47,18 +48,18 @@ subset = Observable{Any}()
 
 onany(img, ax.finallimits) do img, lims
     (xlow, ylow), (xhigh, yhigh) = extrema(lims)
-    xlow = clamp(round(Int, xlow), 1, size(img, 2))
-    xhigh = clamp(round(Int, xhigh), 1, size(img, 2))
-    ylow = clamp(round(Int, ylow), 1, size(img, 1))
-    yhigh = clamp(round(Int, yhigh), 1, size(img, 1))
+    xlow = clamp(round(Int, xlow), 1, size(img, 2) + 1)
+    xhigh = clamp(round(Int, xhigh), 0, size(img, 2))
+    ylow = clamp(round(Int, ylow), 1, size(img, 1) + 1)
+    yhigh = clamp(round(Int, yhigh), 0, size(img, 1))
     subset[] = @view img[ylow:yhigh, xlow:xhigh]
     reset_limits!(ax2)
 end
 notify(img)
 
-hist!(ax2, @lift(vec(Float64.(red.($subset)))), bins=range(0, 1, length=256), color=(:red, 0.3))
-hist!(ax2, @lift(vec(Float64.(green.($subset)))), bins=range(0, 1, length=256), color=(:green, 0.3))
-hist!(ax2, @lift(vec(Float64.(blue.($subset)))), bins=range(0, 1, length=256), color=(:blue, 0.3))
+hist!(ax2, @lift(vec(Float64.(red.($subset)))), bins=range(0, 1, length=256), color=RGBAf(1, 0, 0, 0.3))
+hist!(ax2, @lift(vec(Float64.(green.($subset)))), bins=range(0, 1, length=256), color=RGBAf(0, 1, 0, 0.3))
+hist!(ax2, @lift(vec(Float64.(blue.($subset)))), bins=range(0, 1, length=256), color=RGBAf(0, 0, 1, 0.3))
 ylims!(ax2, low=0)
 xlims!(ax2, 0, 1)
 
@@ -89,6 +90,3 @@ end
 
 f
 
-##
-
-image(randn(3000, 3000))
