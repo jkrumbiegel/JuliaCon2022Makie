@@ -7,8 +7,8 @@ using Chain
 using GLMakie.Colors
 using Memoization
 
-GLMakie.set_window_config!(float=true)
 GLMakie.activate!()
+GLMakie.set_window_config!(float=true)
 
 ##
 metadata = open(JSON3.read, "images.json")
