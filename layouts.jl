@@ -52,14 +52,3 @@ Box(gl2[1, 2])
 colsize!(gl2, 1, Aspect(1, 1.0))
 # why not rowsize! ?
 f
-
-
-## figure size following content
-
-f = Figure()
-for i in 1:4, j in 1:3
-    Axis(f[i, j], width=100, height=100)
-end
-f
-##
-resize_to_layout!(f)
