@@ -1,0 +1,4 @@
+[sysimage]
+exclude = [] # Additional packages to be exlucded in the system image
+execution_files = ["sysimage_statements.jl"] # Precompile execution files to be used, relative to the project folder
+statements_files = [] # Precompile statements files to be used, relative to the project folder
