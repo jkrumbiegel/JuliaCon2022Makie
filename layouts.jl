@@ -6,7 +6,7 @@ GLMakie.set_window_config!(float=true)
 
 ## gridlayout basics
 
-f = Figure()
+f = Figure(fontsize=30)
 
 Box(f[1, 1:3], color=:transparent, strokecolor=:red)
 Box(f[2, 1:3], color=:transparent, strokecolor=:red)

@@ -32,7 +32,7 @@ img = lift(entry) do e
     load_image(e["url"])
 end
 
-f = Figure(fontsize=30)
+f = Figure(fontsize=30, figure_padding=40)
 
 ax, im = image(f[1, 1], @lift($img'),
     axis=(;
@@ -58,9 +58,9 @@ onany(img, ax.finallimits) do img, lims
 end
 notify(img)
 
-hist!(ax2, @lift(vec(Float64.(red.($subset)))), bins=range(0, 1, length=256), color=RGBAf(1, 0, 0, 0.3))
-hist!(ax2, @lift(vec(Float64.(green.($subset)))), bins=range(0, 1, length=256), color=RGBAf(0, 1, 0, 0.3))
-hist!(ax2, @lift(vec(Float64.(blue.($subset)))), bins=range(0, 1, length=256), color=RGBAf(0, 0, 1, 0.3))
+hist!(ax2, @lift(vec(red.($subset))), bins=range(0, 1, length=256), color=RGBAf(1, 0, 0, 0.3))
+hist!(ax2, @lift(vec(green.($subset))), bins=range(0, 1, length=256), color=RGBAf(0, 1, 0, 0.3))
+hist!(ax2, @lift(vec(blue.($subset))), bins=range(0, 1, length=256), color=RGBAf(0, 0, 1, 0.3))
 ylims!(ax2, low=0)
 xlims!(ax2, 0, 1)
 
