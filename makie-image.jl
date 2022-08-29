@@ -10,4 +10,5 @@ md"""
 * Use Julia 1.8
 * Create new project, only with non problemtatic packages
 * make sure you have PackageCompiler@2.0.7
+* make sure you have write permissions to the current working directory
 """
